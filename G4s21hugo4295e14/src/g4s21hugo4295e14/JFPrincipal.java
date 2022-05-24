@@ -34,17 +34,7 @@ public class JFPrincipal extends javax.swing.JFrame {
         txtnombre.setEditable(false);
         txtedad.setEditable(false);
         txtcorreo.setEditable(false);
-        Conexion conexion = new Conexion();
-        if (conexion.consultartodos()){
-            listadatos = conexion.getListaDatos();
-            for(Datos datos : listadatos){
-                mimodelo.addRow(new Object[]{String.valueOf(datos.getId()),datos.getNombre(),String.valueOf(datos.getEdad()),datos.getCorreo()});
-            }
-            jTDatos.setModel(mimodelo);
-        } else {
-            JOptionPane.showMessageDialog(this, "No se pueden cargar los datos....");
-            
-        }
+        CargarDatos();
     }
 
     /**
@@ -103,6 +93,11 @@ public class JFPrincipal extends javax.swing.JFrame {
         });
 
         btneliminar.setText("Eliminar");
+        btneliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btneliminarActionPerformed(evt);
+            }
+        });
 
         jTDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -248,6 +243,7 @@ public class JFPrincipal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Error al actualizar","Actualizacion",JOptionPane.INFORMATION_MESSAGE);
             }
         }
+        CargarDatos();
         //acciones de botones
         btneditar.setEnabled(true);
         btneliminar.setEnabled(true);
@@ -299,6 +295,17 @@ public class JFPrincipal extends javax.swing.JFrame {
         accion ="A";
     }//GEN-LAST:event_btneditarActionPerformed
 
+    private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
+        // TODO add your handling code here:
+        Conexion conexion = new Conexion();
+        if (conexion.borrar(valorID)){
+            JOptionPane.showMessageDialog(null, "Se elimino correctamente","Eliminar",JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al eliminar registro","Eliminar",JOptionPane.INFORMATION_MESSAGE);
+        }
+        CargarDatos();
+    }//GEN-LAST:event_btneliminarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -332,6 +339,22 @@ public class JFPrincipal extends javax.swing.JFrame {
                 new JFPrincipal().setVisible(true);
             }
         });
+    }
+    
+    private void CargarDatos(){
+        //limpiar el modelo
+        mimodelo = new DefaultTableModel(null,titulo);
+        //se carga el modelo con la informacion
+        Conexion conexion = new Conexion();
+        if (conexion.consultartodos()){
+            listadatos = conexion.getListaDatos();
+            for(Datos datos : listadatos){
+                mimodelo.addRow(new Object[]{String.valueOf(datos.getId()),datos.getNombre(),String.valueOf(datos.getEdad()),datos.getCorreo()});
+            }
+            jTDatos.setModel(mimodelo);
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pueden cargar los datos...."); 
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

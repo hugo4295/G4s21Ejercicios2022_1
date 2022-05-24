@@ -19,16 +19,7 @@ public class G4s21hugo4295e14 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Conexion conexion = new Conexion();
-        conexion.Abrir();
-        
-        if (conexion.borrar(3)){
-            System.out.println("se eliminio correctamente");
-        }else{
-            System.out.println("no se logro la consulta");
-        }          
-        
-        conexion.cerrar();
+        new JFPrincipal().setVisible(true);
     }
     
 }
