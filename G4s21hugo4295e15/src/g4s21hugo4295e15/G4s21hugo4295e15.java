@@ -13,6 +13,7 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.property.TextAlignment;
 import java.io.File;
 import java.io.IOException;
 
@@ -48,6 +49,8 @@ public class G4s21hugo4295e15 {
             paragraph.setFont(font);
             Color myColor = new DeviceRgb(255, 100, 20);
             paragraph.setFontColor(myColor);
+            paragraph.setFirstLineIndent(100);
+            paragraph.setTextAlignment(TextAlignment.JUSTIFIED_ALL);
             document.add(paragraph);
             pdfDocument.close();
             pdfwriter.close();
